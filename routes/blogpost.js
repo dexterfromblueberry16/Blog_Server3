@@ -40,7 +40,7 @@ router
 
   router
   .route("/update/likes/:id")
-  .patch(async (req, res) => {
+  .patch(middleware.checkToken, async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
@@ -79,7 +79,7 @@ router
 
   router
   .route("/update/deleteLikes/:id")
-  .patch(async (req, res) => {
+  .patch(middleware.checkToken, async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
