@@ -7,7 +7,8 @@ const app = express();
 const router = express.Router();
 
 mongoose.connect(
-  "mongodb+srv://Dexter:manish@cluster0.tsrgyd0.mongodb.net/?retryWrites=true&w=majority",
+  // "mongodb+srv://Dexter:manish@cluster0.tsrgyd0.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://Dexter:manish@cluster0.tsrgyd0.mongodb.net/?w=majority",
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -37,7 +38,7 @@ router.use("/profile", profileRoute);
 const blogRoute = require("./routes/blogpost");
 router.use("/blogPost", blogRoute);
 
-app.use('/.netlify/functions/api', router);
+app.use('/', router);
 
 data = {
   msg: "Welcome on DevStack Blog App development YouTube video series",
