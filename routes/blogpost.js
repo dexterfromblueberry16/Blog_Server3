@@ -77,56 +77,38 @@ router
     // );
   });
 
-  router
-  .route("/update/likedOrNot/:id")
-  .patch(middleware.checkToken, async (req, res) => {
-    // console.log(req.body+' Reached ');
-    // console.log(req.body.like+"likes");
-    // var currentlikes = 0;
-    var result = await BlogPost.findById(req.params.id);
-    result.share = req.share; 
-    await result.save(); 
-    res.json(result);
-    //   .then((result) => {
-    //   res.json({ data: result["_id"] });
-    // })
-    // .catch((err) => {
-    //   console.log(err), res.json({ err: err });
-    // }
-    // ); 
-    // console.log(result.like+"   "+currentlikes);
-  });
+  // router
+  // .route("/update/likedOrNot/:id")
+  // .patch((req, res) => {
+  //   // console.log(req.body+' Reached ');
+  //   // console.log(req.body.like+"likes");
+  //   // var currentlikes = 0;
+  //   var result = BlogPost.findById(req.params.id);
+  //   result.share = req.share; 
+  //   result.save(); 
+  //   res.json(result);
+  //   //   .then((result) => {
+  //   //   res.json({ data: result["_id"] });
+  //   // })
+  //   // .catch((err) => {
+  //   //   console.log(err), res.json({ err: err });
+  //   // }
+  //   // ); 
+  //   // console.log(result.like+"   "+currentlikes);
+  // });
 
-  router
-  .route("/get/likedOrNot/:id")
-  .get(middleware.checkToken,  (req, res) => {
-    // console.log(req.body+' Reached ');
-    // console.log(req.body.like+"likes");
-    // var currentlikes = 0;
-    var result = BlogPost.findById(req.params.id);
-    console.log(result.share);
-    if (err){
-      console.log(err);
-  }
-  else{
-      console.log("Result : ", result.share);
-      res.json(result);
-  }
-    // result.like = result.like + 1;
-    // result.share = 1; 
-    // 
-
-    result.save(); 
-    res.json(result);
-    //   .then((result) => {
-    //   res.json({ data: result["_id"] });
-    // })
-    // .catch((err) => {
-    //   console.log(err), res.json({ err: err });
-    // }
-    // ); 
-    // console.log(result.like+"   "+currentlikes);
-});
+  // router.route("/get/likedOrNot/:id").get((req, res) => {
+  //   BlogPost.findById(req.params.id, function(err, result){if (err){
+  //     console.log(err);
+  // }
+  // else{
+  //     console.log("Result", result.like);
+  //     res.json(result);
+  // }});    
+  //   // var dba = BlogPost.find(element => element._id == req.params.id);
+  //   //   if(dba) { console.log(dba.like + "this");}
+  //   //   else {res.sendStatus(404);}
+  // });
 
   router
   .route("/update/deleteLikes/:id")
