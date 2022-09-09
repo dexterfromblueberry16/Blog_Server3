@@ -104,6 +104,7 @@ router
     // console.log(req.body.like+"likes");
     // var currentlikes = 0;
     var result = BlogPost.findById(req.params.id);
+    print(result.share);
     if (err){
       console.log(err);
   }
