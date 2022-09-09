@@ -40,11 +40,11 @@ router
 
   router
   .route("/update/likes/:id")
-  .patch(middleware.checkToken, async (req, res) => {
+  .patch(async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
-    var result= await BlogPost.findById(req.params.id);
+    var result = await BlogPost.findById(req.params.id);
     result.like = result.like + 1;
     result.share = 1; 
     await result.save(); 
@@ -78,8 +78,58 @@ router
   });
 
   router
-  .route("/update/deleteLikes/:id")
+  .route("/update/likedOrNot/:id")
   .patch(middleware.checkToken, async (req, res) => {
+    // console.log(req.body+' Reached ');
+    // console.log(req.body.like+"likes");
+    // var currentlikes = 0;
+    var result = await BlogPost.findById(req.params.id);
+    result.share = req.share; 
+    await result.save(); 
+    res.json(result);
+    //   .then((result) => {
+    //   res.json({ data: result["_id"] });
+    // })
+    // .catch((err) => {
+    //   console.log(err), res.json({ err: err });
+    // }
+    // ); 
+    // console.log(result.like+"   "+currentlikes);
+  });
+
+  router
+  .route("/get/likedOrNot/:id")
+  .get(middleware.checkToken, async (req, res) => {
+    // console.log(req.body+' Reached ');
+    // console.log(req.body.like+"likes");
+    // var currentlikes = 0;
+    var result = await BlogPost.findById(req.params.id);
+    if (err){
+      console.log(err);
+  }
+  else{
+      console.log("Result : ", result.share);
+      res.json(result);
+  }
+    // result.like = result.like + 1;
+    // result.share = 1; 
+    // 
+
+    await result.save(); 
+    res.json(result);
+    //   .then((result) => {
+    //   res.json({ data: result["_id"] });
+    // })
+    // .catch((err) => {
+    //   console.log(err), res.json({ err: err });
+    // }
+    // ); 
+    // console.log(result.like+"   "+currentlikes);
+});
+
+  router
+  .route("/update/deleteLikes/:id")
+  .patch(async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
@@ -113,7 +163,7 @@ router
     // );
   });
 
-router.route("/get/likes/:id").get(middleware.checkToken, (req, res) => {
+router.route("/get/likes/:id").get((req, res) => {
   BlogPost.findById(req.params.id, function(err, result){if (err){
     console.log(err);
 }
