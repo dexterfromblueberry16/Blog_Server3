@@ -14,7 +14,7 @@ mongoose.connect(
     useCreateIndex: true,
     useUnifiedTopology: true,
     dbName: "BlogDB",
-  }
+  } 
 );
 
 const connection = mongoose.connection;
