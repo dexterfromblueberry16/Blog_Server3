@@ -99,11 +99,11 @@ router
 
   router
   .route("/get/likedOrNot/:id")
-  .get(middleware.checkToken, async (req, res) => {
+  .get(middleware.checkToken,  (req, res) => {
     // console.log(req.body+' Reached ');
     // console.log(req.body.like+"likes");
     // var currentlikes = 0;
-    var result = await BlogPost.findById(req.params.id);
+    var result = BlogPost.findById(req.params.id);
     if (err){
       console.log(err);
   }
@@ -115,7 +115,7 @@ router
     // result.share = 1; 
     // 
 
-    await result.save(); 
+    result.save(); 
     res.json(result);
     //   .then((result) => {
     //   res.json({ data: result["_id"] });
