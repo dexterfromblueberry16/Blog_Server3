@@ -40,11 +40,15 @@ router
 
   router
   .route("/update/likes/:id")
-  .patch((req, res) => {
+  .patch(async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
-    BlogPost.findById(req.params.id, async function(err,result){result.like = result.like + 1; result.share = 1; await result.save(); res.json(result);
+    var result= await BlogPost.findById(req.params.id);
+    result.like = result.like + 1;
+    result.share = 1; 
+    await result.save(); 
+    res.json(result);
     //   .then((result) => {
     //   res.json({ data: result["_id"] });
     // })
@@ -52,7 +56,8 @@ router
     //   console.log(err), res.json({ err: err });
     // }
     // ); 
-    console.log(result.like+"   "+currentlikes);});
+    console.log(result.like+"   "+currentlikes);
+
     // BlogPost.findById(req.params.id, function(err,result){ result.save(); console.log(result.like+"   "+currentlikes);});
 
     // BlogPost.findOneAndUpdate(
@@ -74,18 +79,22 @@ router
 
   router
   .route("/update/deleteLikes/:id")
-  .patch((req, res) => {
+  .patch(async (req, res) => {
     console.log(req.body+' Reached ');
     console.log(req.body.like+"likes");
     var currentlikes = 0;
-    BlogPost.findById(req.params.id, async function(err,result){result.like = result.like - 1; result.share = 0; await result.save(); res.json(result);
-    //   .then((result) => {
-    //   res.json({ data: result["_id"] });
-    // })
-    // .catch((err) => {
-    //   console.log(err), res.json({ err: err });
-    // }); 
-    console.log(result.like+"   "+currentlikes); });
+    var result= await BlogPost.findById(req.params.id);
+    result.like = result.like - 1; 
+    result.share = 0; 
+    await result.save(); 
+    res.json(result);
+      //   .then((result) => {
+      //   res.json({ data: result["_id"] });
+      // })
+      // .catch((err) => {
+      //   console.log(err), res.json({ err: err });
+      // }); 
+    console.log(result.like+"   "+currentlikes); 
     // BlogPost.findById(req.params.id, function(err,result){ result.save(); console.log(result.like+"   "+currentlikes);});
 
     // BlogPost.findOneAndUpdate(
