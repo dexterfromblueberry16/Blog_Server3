@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const port = process.env.PORT || 5000;
 const app = express();
 // const serverless = require('serverless-http');
@@ -39,6 +40,11 @@ const blogRoute = require("./routes/blogpost");
 router.use("/blogPost", blogRoute);
 
 app.use('/', router);
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+  
+// Set EJS as templating engine 
+app.set("view engine", "ejs");
 
 data = {
   msg: "Welcome on DevStack Blog App development YouTube video series",

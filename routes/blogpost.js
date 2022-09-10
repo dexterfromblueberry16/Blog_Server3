@@ -2,32 +2,110 @@ const express = require("express");
 const router = express.Router();
 const BlogPost = require("../models/blogpost.model");
 const middleware = require("../middleware");
-const multer = require("multer");
+const multer = require('multer');
+
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, req.params.id + ".jpg");
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 1024 * 1024 * 6,
+//   },
+// });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploads");
+      cb(null, "./uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, req.params.id + ".jpg");
-  },
+      cb(null, req.decoded.username + ".jpg");
+  }
 });
 
-const upload = multer({
-  storage: storage,
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+};
+
+const upload = multer({ storage: storage ,
+
   limits: {
     fileSize: 1024 * 1024 * 6,
   },
+  fileFilter: fileFilter,
+
 });
+
+router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
+  imgModel.find({}, (err, items) => {
+      if (err) {
+          console.log(err);
+          res.status(500).send('An error occurred', err);
+      }
+      else {
+          res.render('imagesPage', { items: items });
+      }
+  });
+});
+
+// router.route("/add/coverImage/:id").patchImage(middleware.checkToken, upload.single('image'), (req, res, next) => {
+  
+  // var obj = {
+  //     name: req.body.name,
+  //     desc: req.body.desc,
+  //     img: {
+  //         data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+  //         contentType: 'image/png'
+  //     }
+  // }
+  // imgModel.create(obj, (err, item) => {
+  //     if (err) {
+  //         console.log(err);
+  //     }
+  //     else {
+  //         // item.save();
+  //         res.redirect('/');
+  //     }
+  // });
+
+//   BlogPost.findOneAndUpdate(
+//     { _id: req.params.id },
+//     {
+//       $set: {
+//         coverImage: {
+//                   data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+//                   contentType: 'image/png'
+//               }
+//       },
+//     },
+//     { new: true },
+//     (err, result) => {
+//       if (err) return res.json(err);
+//       return res.json(result);
+//     }
+//   );
+
+// });
 
 router
   .route("/add/coverImage/:id")
-  .patch(middleware.checkToken, upload.single("file"), (req, res) => {
+  .patch(middleware.checkToken, upload.single("img"), (req, res) => {
     BlogPost.findOneAndUpdate(
       { _id: req.params.id },
       {
         $set: {
-          coverImage: req.file.path,
+          coverImage: req.filepath,
         },
       },
       { new: true },
