@@ -20,18 +20,18 @@ const multer = require('multer');
 //     fileSize: 1024 * 1024 * 6,
 //   },
 // });
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
       cb(null, "./uploads");
   },
   filename: (req, file, cb) => {
-      cb(null, req.decoded.username + ".jpg");
-  }
+    cb(null, (new Date()).toISOString().split(':').join('') + ".jpg");
+}
 });
 
+//
 const fileFilter = (req, file, cb) => {
-  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype == 'image/webp' || file.mimetype == 'image/jpg') {
       cb(null, true);
   } else {
       cb(null, false);
@@ -39,13 +39,13 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({ storage: storage ,
-
   limits: {
-    fileSize: 1024 * 1024 * 6,
+    fileSize: 1024 * 1024 * 60,
   },
-  fileFilter: fileFilter,
-
-});
+  fileFilter: fileFilter
+}); 
+const memoryStorage = multer.memoryStorage(); // use this later
+const uploadToMemory = multer({ storage: memoryStorage });
 
 router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
   imgModel.find({}, (err, items) => {
@@ -98,14 +98,21 @@ router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
 
 // });
 
+ 
+// upload and uploadToMemory
+// 
 router
   .route("/add/coverImage/:id")
-  .patch(middleware.checkToken, upload.single("img"), (req, res) => {
+  .patch( middleware.checkToken, uploadToMemory.single("img"), (req, res) => {
+  console.log( 'file: ',req.file);
     BlogPost.findOneAndUpdate(
       { _id: req.params.id },
       {
         $set: {
-          coverImage: req.img.path,
+          Image: {
+            data: req.file.buffer,
+            contentType: 'image/jpeg'
+          },
         },
       },
       { new: true },

@@ -9,6 +9,10 @@ const BlogPost = Schema({
     type: String,
     default: "",
   },
+  Image: {
+    data: Buffer,
+    contentType: String
+  },
   like: {
     type: Number,
     default: 0,
