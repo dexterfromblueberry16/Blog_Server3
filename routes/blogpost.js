@@ -105,7 +105,7 @@ router
       { _id: req.params.id },
       {
         $set: {
-          coverImage: req.filepath,
+          coverImage: req.img.path,
         },
       },
       { new: true },
