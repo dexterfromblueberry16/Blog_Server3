@@ -1,3 +1,3 @@
 module.exports = {
-  key: "MyBlogThings",
+  key: "w%y%h%asdgfuy&9dsPgYuYT",
 };

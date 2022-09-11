@@ -8,7 +8,7 @@ const app = express();
 const router = express.Router();
 
 mongoose.connect(
-  "mongodb+srv://Dexter:manish@cluster0.tsrgyd0.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://Dexter:cPenwg0s9cxoCshX@cluster0.qrrlmhk.mongodb.net/?retryWrites=true&w=majority",
   // "mongodb+srv://Dexter:manish@cluster0.tsrgyd0.mongodb.net/?w=majority",
   {
     useNewUrlParser: true,
