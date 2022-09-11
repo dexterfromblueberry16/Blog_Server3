@@ -40,11 +40,11 @@ const blogRoute = require("./routes/blogpost");
 router.use("/blogPost", blogRoute);
 
 app.use('/', router);
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.json())
   
 // Set EJS as templating engine 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 
 // data = {
 //   msg: "Welcome on DevStack Blog App development YouTube video series",
