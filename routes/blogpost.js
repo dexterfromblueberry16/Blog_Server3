@@ -46,10 +46,10 @@ const fileFilter = (req, file, cb) => {
 // }); 
 const memoryStorage = multer.memoryStorage(); // use this later
 const uploadToMemory = multer({ storage: memoryStorage ,
-  limits: {
-    fileSize: 1024 * 1024 * 60,
-  },
-  fileFilter: fileFilter
+  // limits: {
+  //   fileSize: 1024 * 1024 * 60,
+  // },
+  // fileFilter: fileFilter
 });
 
 router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
