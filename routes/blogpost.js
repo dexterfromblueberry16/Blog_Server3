@@ -30,13 +30,13 @@ const multer = require('multer');
 // });
 
 // //
-// const fileFilter = (req, file, cb) => {
-//   if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype == 'image/webp' || file.mimetype == 'image/jpg') {
-//       cb(null, true);
-//   } else {
-//       cb(null, false);
-//   }
-// };
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype == 'image/webp' || file.mimetype == 'image/jpg') {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+};
 
 // const upload = multer({ storage: storage ,
 //   limits: {
@@ -45,7 +45,12 @@ const multer = require('multer');
 //   fileFilter: fileFilter
 // }); 
 const memoryStorage = multer.memoryStorage(); // use this later
-const uploadToMemory = multer({ storage: memoryStorage });
+const uploadToMemory = multer({ storage: memoryStorage ,
+  limits: {
+    fileSize: 1024 * 1024 * 60,
+  },
+  fileFilter: fileFilter
+});
 
 router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
   imgModel.find({}, (err, items) => {
