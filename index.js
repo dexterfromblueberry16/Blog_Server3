@@ -40,19 +40,19 @@ const blogRoute = require("./routes/blogpost");
 router.use("/blogPost", blogRoute);
 
 app.use('/', router);
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
   
 // Set EJS as templating engine 
-// app.set("view engine", "ejs");
+app.set("view engine", "ejs");
 
-data = {
-  msg: "Welcome on DevStack Blog App development YouTube video series",
-  info: "This is a root endpoint",
-  Working: "Documentations of other endpoints will be release soon :)",
-  request:
-    "Hey if you did'nt subscribed my YouTube channle please subscribe it",
-};
+// data = {
+//   msg: "Welcome on DevStack Blog App development YouTube video series",
+//   info: "This is a root endpoint",
+//   Working: "Documentations of other endpoints will be release soon :)",
+//   request:
+//     "Hey if you did'nt subscribed my YouTube channle please subscribe it",
+// };
 
 app.route("/").get((req, res) => res.json(data));
 

@@ -101,6 +101,22 @@ router.route("/get/coverImage/:id").get(middleware.checkToken, (req, res) => {
  
 // upload and uploadToMemory
 // 
+
+router.route("/update/:id").patch(middleware.checkToken,(req, res) => {
+  console.log(req.params.id);
+  BlogPost.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { title: req.body.title, body: req.body.body } },
+    (err, result) => {
+      if (err) return res.status(500).json({ msg: err });
+      const msg = {
+        msg: "blog successfully updated",
+      };
+      return res.json(msg);
+    }
+  );
+});
+
 router
   .route("/add/coverImage/:id")
   .patch( middleware.checkToken, uploadToMemory.single("img"), (req, res) => {
